@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="FlowBoard is a responsive task board built with HTML, CSS, and vanilla JavaScript."
+    />
+    <title>FlowBoard | Visual Productivity Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="FlowBoard home">
+          <span class="brand-mark">F</span>
+          <span>
+            <strong>FlowBoard</strong>
+            <small>Visual productivity workspace</small>
+          </span>
+        </a>
+
+        <nav class="top-actions" aria-label="Board controls">
+          <button class="ghost-button" id="themeToggle" type="button">
+            <span id="themeIcon" aria-hidden="true">Theme</span>
+            <span id="themeLabel">Dark</span>
+          </button>
+          <button class="primary-button" id="openTaskModal" type="button">Add task</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero-section" aria-labelledby="heroTitle">
+          <div class="hero-copy">
+            <p class="eyebrow">Built for clean focus</p>
+            <h1 id="heroTitle">Plan work visually, then move it forward.</h1>
+            <p>
+              A lightweight board for tracking tasks, priorities, and progress. Everything
+              stays in your browser through localStorage.
+            </p>
+          </div>
+
+          <div class="stats-panel" aria-label="Board progress">
+            <div>
+              <span class="stat-value" id="totalTasks">0</span>
+              <span class="stat-label">Tasks</span>
+            </div>
+            <div>
+              <span class="stat-value" id="doneTasks">0</span>
+              <span class="stat-label">Done</span>
+            </div>
+            <div>
+              <span class="stat-value" id="progressPercent">0%</span>
+              <span class="stat-label">Progress</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="toolbar" aria-label="Task filters">
+          <label class="search-box" for="searchInput">
+            <span aria-hidden="true">Search</span>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Search tasks, tags, or notes"
+              autocomplete="off"
+            />
+          </label>
+
+          <div class="filter-group" role="group" aria-label="Filter by priority">
+            <button class="filter-chip active" type="button" data-filter="all">All</button>
+            <button class="filter-chip" type="button" data-filter="high">High</button>
+            <button class="filter-chip" type="button" data-filter="medium">Medium</button>
+            <button class="filter-chip" type="button" data-filter="low">Low</button>
+          </div>
+        </section>
+
+        <section class="board" aria-label="Task board">
+          <article class="column" data-column="todo">
+            <div class="column-header">
+              <div>
+                <h2>To Do</h2>
+                <p>Ideas waiting for action</p>
+              </div>
+              <span class="count-pill" id="todoCount">0</span>
+            </div>
+            <div class="task-list" id="todoList" data-status="todo"></div>
+          </article>
+
+          <article class="column" data-column="progress">
+            <div class="column-header">
+              <div>
+                <h2>In Progress</h2>
+                <p>Work currently active</p>
+              </div>
+              <span class="count-pill" id="progressCount">0</span>
+            </div>
+            <div class="task-list" id="progressList" data-status="progress"></div>
+          </article>
+
+          <article class="column" data-column="done">
+            <div class="column-header">
+              <div>
+                <h2>Done</h2>
+                <p>Finished and shipped</p>
+              </div>
+              <span class="count-pill" id="doneCount">0</span>
+            </div>
+            <div class="task-list" id="doneList" data-status="done"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="task-modal" id="taskModal">
+      <form method="dialog" id="taskForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">New card</p>
+            <h2>Add a task</h2>
+          </div>
+          <button class="icon-button" type="button" id="closeTaskModal" aria-label="Close modal">
+            X
+          </button>
+        </div>
+
+        <label>
+          Task title
+          <input id="taskTitle" type="text" maxlength="70" placeholder="Design landing page" required />
+        </label>
+
+        <label>
+          Notes
+          <textarea
+            id="taskNotes"
+            rows="4"
+            maxlength="180"
+            placeholder="What needs to be done?"
+          ></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label>
+            Priority
+            <select id="taskPriority">
+              <option value="high">High</option>
+              <option value="medium" selected>Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </label>
+
+          <label>
+            Status
+            <select id="taskStatus">
+              <option value="todo">To Do</option>
+              <option value="progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Tags
+          <input id="taskTags" type="text" placeholder="frontend, college, urgent" />
+        </label>
+
+        <menu class="modal-actions">
+          <button class="ghost-button" type="button" id="resetDemo">Reset demo</button>
+          <button class="primary-button" type="submit">Save task</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="./js/storage.js"></script>
+    <script src="./js/dragdrop.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
